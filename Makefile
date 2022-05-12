@@ -8,4 +8,4 @@ __watch:
 	yarn nodemon --watch src --ext ts --exec 'make build'
 
 build:
-	yarn --silent esbuild src/main.ts --bundle --minify > dist/main.min.js
+	yarn --silent esbuild src/main.ts --bundle --minify > public/dist/main.min.js
