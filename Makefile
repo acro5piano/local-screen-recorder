@@ -2,7 +2,7 @@ dev:
 	make -j __serve __watch
 
 __serve:
-	php -S localhost:6677
+	php -S localhost:6677 -t public
 
 __watch:
 	yarn nodemon --watch src --ext ts --exec 'make build'
