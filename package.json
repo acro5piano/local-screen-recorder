@@ -1,0 +1,13 @@
+{
+  "name": "local-screen-recorder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:acro5piano/local-screen-recorder",
+  "author": "Kay Gosho <ketsume0211@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.14.39",
+    "nodemon": "^2.0.16",
+    "typescript": "^4.6.4"
+  }
+}
