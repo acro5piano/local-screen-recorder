@@ -20,7 +20,7 @@ async function start() {
     blobs.push(event.data)
   }
 
-  recorder.start(1000)
+  recorder.start(5000)
 
   async function end() {
     recorder.stop()
