@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "author": "kazuya gosho",
+  "name": "local-screen-recorder",
+  "description": "A chrome extension which records the screen and audio as a video file",
+  "version": "0.0.1",
+  "homepage_url": "https://github.com/acro5piano/chrome-extension",
+  "icons": {
+    "16": "./logo.png"
+  },
+  "action": {},
+  "background" : {
+    "service_worker": "./background.min.js"
+  },
+  "permissions": ["activeTab"]
+}

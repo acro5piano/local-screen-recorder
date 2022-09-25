@@ -102,5 +102,5 @@ typings/
 # TernJS port file
 .tern-port
 
-public/dist/*
-!public/dist/.gitkeep
+dist/*
+!dist/.gitkeep

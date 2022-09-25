@@ -28,7 +28,7 @@ async function start() {
     const url = window.URL.createObjectURL(
       new Blob(blobs, { type: 'video/webm' }),
     )
-    link.download = `image-annotator-com-${new Date()}.webm`
+    link.download = `local-screen-recorder-${new Date().toISOString()}.webm`
     link.href = url
     link.click()
   }
