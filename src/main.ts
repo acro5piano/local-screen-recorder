@@ -1,14 +1,18 @@
 async function start() {
-  const audio = await navigator.mediaDevices.getUserMedia({
-    audio: true,
-  })
+  const audio: MediaStream | null = await navigator.mediaDevices
+    .getUserMedia({
+      audio: true,
+    })
+    .catch(() => null)
 
   const screen = await navigator.mediaDevices.getDisplayMedia({
     audio: true,
     video: true,
   })
 
-  const stream = new MediaStream([...screen.getTracks(), ...audio.getTracks()])
+  const stream = audio
+    ? new MediaStream([...screen.getTracks(), ...audio?.getTracks()])
+    : new MediaStream([...screen.getTracks()])
   const recorder = new MediaRecorder(stream)
 
   const blobs: Blob[] = []
@@ -23,7 +27,11 @@ async function start() {
   recorder.start(5000)
 
   async function end() {
-    recorder.stop()
+    try {
+      recorder.stop()
+    } catch {
+      console.log('already stopped')
+    }
     const link = document.createElement('a')
     const url = window.URL.createObjectURL(
       new Blob(blobs, { type: 'video/webm' }),

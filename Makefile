@@ -10,4 +10,4 @@ __watch:
 build:
 	node_modules/.bin/esbuild src/main.ts --bundle --minify > dist/main.min.js
 	node_modules/.bin/esbuild src/background.ts --bundle --minify > dist/background.min.js
-	cp -v src/index.html manifest.json logo.png dist/
+	cp -v index.html manifest.json logo.png dist/
