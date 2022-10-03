@@ -1,13 +1,25 @@
-export async function startRecording() {
-  const audio: MediaStream | null = await navigator.mediaDevices
-    .getUserMedia({
-      audio: true,
-    })
-    .catch(() => null)
+interface StartRecordingOption {
+  enableMic: boolean
+  enableAudio: boolean
+  enableScreen: boolean
+}
+
+export async function startRecording(option: StartRecordingOption) {
+  let audio: MediaStream | null = null
+
+  if (option.enableMic) {
+    try {
+      audio = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      })
+    } catch (e) {
+      console.error('could not get audio source: ', e)
+    }
+  }
 
   const screen = await navigator.mediaDevices.getDisplayMedia({
-    audio: true,
-    video: true,
+    audio: option.enableAudio,
+    video: option.enableScreen,
   })
 
   const stream = audio
@@ -26,7 +38,11 @@ export async function startRecording() {
 
   recorder.start(5000)
 
-  return async function end() {
+  recorder.onstop = async () => {
+    await end()
+  }
+
+  async function end() {
     try {
       recorder.stop()
     } catch {
@@ -40,4 +56,6 @@ export async function startRecording() {
     link.href = url
     link.click()
   }
+
+  return end
 }
