@@ -38,6 +38,12 @@ export async function startRecording(option: StartRecordingOption) {
 
   recorder.start(5000)
 
+  screen.getTracks().forEach((track) => {
+    track.onended = () => {
+      recorder.stop()
+    }
+  })
+
   recorder.onstop = async () => {
     await end()
   }
@@ -55,6 +61,10 @@ export async function startRecording(option: StartRecordingOption) {
       } catch {
         console.log('already stopped')
       }
+    }
+    if (blobs.length === 0) {
+      alert('too short! please try again')
+      return
     }
     const link = document.createElement('a')
     const url = window.URL.createObjectURL(
