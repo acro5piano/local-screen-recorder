@@ -1,4 +1,4 @@
-async function start() {
+export async function startRecording() {
   const audio: MediaStream | null = await navigator.mediaDevices
     .getUserMedia({
       audio: true,
@@ -26,7 +26,7 @@ async function start() {
 
   recorder.start(5000)
 
-  async function end() {
+  return async function end() {
     try {
       recorder.stop()
     } catch {
@@ -40,8 +40,4 @@ async function start() {
     link.href = url
     link.click()
   }
-
-  document.getElementById('end').addEventListener('click', end)
 }
-
-document.getElementById('start').addEventListener('click', start)
