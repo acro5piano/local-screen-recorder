@@ -5,13 +5,14 @@ interface StartRecordingOption {
 }
 
 export async function startRecording(option: StartRecordingOption) {
-  let audio: MediaStream | null = null
+  const tracks: MediaStreamTrack[] = []
 
   if (option.enableMic) {
     try {
-      audio = await navigator.mediaDevices.getUserMedia({
+      const micTrack = await navigator.mediaDevices.getUserMedia({
         audio: true,
       })
+      tracks.push(...micTrack.getTracks())
     } catch (e) {
       console.error('could not get audio source: ', e)
     }
@@ -21,10 +22,9 @@ export async function startRecording(option: StartRecordingOption) {
     audio: option.enableAudio,
     video: option.enableScreen,
   })
+  tracks.push(...screen.getTracks())
 
-  const stream = audio
-    ? new MediaStream([...screen.getTracks(), ...audio?.getTracks()])
-    : new MediaStream([...screen.getTracks()])
+  const stream = new MediaStream(tracks)
   const recorder = new MediaRecorder(stream)
 
   const blobs: Blob[] = []
@@ -43,10 +43,18 @@ export async function startRecording(option: StartRecordingOption) {
   }
 
   async function end() {
+    recorder.onstop = null
     try {
       recorder.stop()
     } catch {
       console.log('already stopped')
+    }
+    for (const track of stream.getTracks()) {
+      try {
+        track.stop()
+      } catch {
+        console.log('already stopped')
+      }
     }
     const link = document.createElement('a')
     const url = window.URL.createObjectURL(

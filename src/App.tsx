@@ -16,14 +16,17 @@ export const App = () => {
   })
 
   const onClickStart = handleSubmit(async (option) => {
+    if (isStarted) {
+      return
+    }
     setIsStarted(true)
     const onEnd = await startRecording(option)
     endRecording.current = onEnd
   })
 
   const onClickEnd = async () => {
-    setIsStarted(false)
     await endRecording.current?.()
+    setIsStarted(false)
   }
 
   return (
@@ -49,7 +52,11 @@ export const App = () => {
           </div>
           <div className="">
             {match(isStarted)
-              .with(false, () => <Button type="submit">Start</Button>)
+              .with(false, () => (
+                <Button type="button" onClick={onClickStart}>
+                  Start
+                </Button>
+              ))
               .with(true, () => (
                 <Button type="button" onClick={onClickEnd}>
                   End
