@@ -5,7 +5,7 @@ __serve:
 	php -S localhost:6677 -t public
 
 __watch:
-	yarn nodemon --watch src --ext ts --exec 'make build'
+	pnpm nodemon --watch src --ext ts --exec 'make build'
 
 build:
 	node_modules/.bin/esbuild src/main.ts --bundle --minify > dist/main.min.js
