@@ -29,9 +29,13 @@ export const App = () => {
       return
     }
     setOption(option)
-    setIsStarted(true)
-    const onEnd = await startRecording(option)
-    endRecording.current = onEnd
+    try {
+      const onEnd = await startRecording(option)
+      setIsStarted(true)
+      endRecording.current = onEnd
+    } catch (e) {
+      console.error('unable to start recording: ', e)
+    }
   })
 
   const onClickEnd = async () => {
