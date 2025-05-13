@@ -1,24 +1,34 @@
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { match } from 'ts-pattern'
-import { startRecording } from './recorder'
+import { startRecording, StartRecordingOption } from './recorder'
+import useLocalStorageState from 'use-local-storage-state'
+import { Button } from './components/Button'
 
 export const App = () => {
   const [isStarted, setIsStarted] = useState(false)
   const endRecording = useRef<() => Promise<void>>()
 
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      enableMic: true,
-      enableAudio: true,
-      enableScreen: true,
+  const [option, setOption] = useLocalStorageState<StartRecordingOption>(
+    'option',
+    {
+      defaultValue: {
+        enableMic: true,
+        enableAudio: true,
+        enableScreen: true,
+      },
     },
+  )
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: option,
   })
 
   const onClickStart = handleSubmit(async (option) => {
     if (isStarted) {
       return
     }
+    setOption(option)
     setIsStarted(true)
     const onEnd = await startRecording(option)
     endRecording.current = onEnd
@@ -69,10 +79,3 @@ export const App = () => {
     </div>
   )
 }
-
-const Button = (props: React.ComponentProps<'button'>) => (
-  <button
-    className="bg-slate-100 text-slate-800 rounded px-4 py-1 shadow-md w-full font-bold"
-    {...props}
-  />
-)

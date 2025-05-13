@@ -1,4 +1,4 @@
-interface StartRecordingOption {
+export interface StartRecordingOption {
   enableMic: boolean
   enableAudio: boolean
   enableScreen: boolean
