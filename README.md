@@ -1,6 +1,6 @@
 # local-screen-recorder
 
-![image](./media/screenshot.png)
+<img width="1033" height="779" alt="image" src="https://github.com/user-attachments/assets/dd9363e1-378c-44ae-b254-ce7b761a221c" />
 
 Local screen recorder with audio. Free (and poor) Loom alternative.
 
@@ -14,6 +14,10 @@ pnpm build
 ```
 
 Then open dist folder and unpacked extension.
+
+2025/12/19: Now camera is available. Will update the guidance soon.
+
+<img width="859" height="653" alt="image" src="https://github.com/user-attachments/assets/4694e047-a91a-47c9-a2de-b0890ba3d646" />
 
 # Development
 
