@@ -16,6 +16,7 @@ export const App = () => {
         enableMic: true,
         enableAudio: true,
         enableScreen: true,
+        enableCamera: false,
       },
     },
   )
@@ -62,6 +63,10 @@ export const App = () => {
             <label className="flex justify-between items-center">
               Enable Screen
               <input type="checkbox" disabled {...register('enableScreen')} />
+            </label>
+            <label className="flex justify-between items-center">
+              Enable Camera
+              <input type="checkbox" {...register('enableCamera')} />
             </label>
           </div>
           <div className="">
